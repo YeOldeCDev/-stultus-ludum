@@ -6,10 +6,8 @@
 int yes_or_no;
 int alive = 1;
 
-int main(int argc, char const *argv[])
+void begin()
 {
-
-
     //introduction of the game
     printf("Welcome to a terminal based rpg! REMEMBER: you can't save so this is a rougelike and a death means that you have to start from the beginning\n");
     printf("Just a small project made during a summer vacation");
@@ -17,7 +15,10 @@ int main(int argc, char const *argv[])
 
     //game starts
     printf("As you head out on your way , you suddenly see...\n");
+}
 
+void first_encounter()
+{
     //1st enemy encounter
     //NOTE:all enemy encounters after the first 5 will be random
     printf("A goblin!\n");
@@ -47,13 +48,15 @@ int main(int argc, char const *argv[])
         alive = 0;
         if (alive == 0)
         {
-            _sleep(10);
             exit(0);
         }
     }
+}
 
-    //end of the game
-    printf("congrats! you win!");
-
+int main(int argc, char const *argv[])
+{ 
+    begin();
+    first_encounter();
+    
     return 0;
 }
