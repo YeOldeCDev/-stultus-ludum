@@ -47,7 +47,6 @@ int main(int argc, char const *argv[])
         alive = 0;
         if (alive == 0)
         {
-            printf("you died!");
             _sleep(10);
             exit(0);
         }
