@@ -1,7 +1,7 @@
 //no saving rouge-like rpg
 //death is a simple restart
 
-#include "header_files\libraries.h" 
+#include "header_files\libraries.h"
 
 int health = 100;
 int armor = 0;
@@ -9,16 +9,16 @@ int have_pistol = 0;
 int massacre = 1;
 int loot = 0;
 int pistol_ammo = 6;
+int trade = 0;
+int trade_choice;
 
-void intro()
-{
+void intro() {
     //introduction of the game
     printf("Welcome to a terminal based rpg! REMEMBER: you can't save so this is a rougelike and a death means that you have to start from the beginning\n");
     printf("Now , you start your journey!\n");
 }
 
-void first_encounter()
-{
+void first_encounter() {
     int yes_or_no;
     //game starts
     printf("As you head out on your way , you suddenly see...\n");
@@ -34,7 +34,7 @@ void first_encounter()
     ---------------------*/
     printf("Will you run away? (1(standing for yes)/0(standing for no))\n");
     /*---------------------*/
-    
+
     //first yes or no question , the main mechanic of the game
     scanf_s("%d" , &yes_or_no);
 
@@ -53,14 +53,13 @@ void first_encounter()
     }
 }
 
-void second_encounter()
-{
+void second_encounter() {
     //bunch of integers I don't think making these global would be a good idea
     int fight_or_run;
     int fight_or_run2;
     int chainsaw_pickup;
     int weapon_choice;
-    
+
     //run away because of the fact that if you don't run you die and have to restart
     printf("as you run away you see , it a pistol\n");
     //you take the pistol
@@ -133,17 +132,17 @@ void second_encounter()
         printf("you run away\n");
         massacre = 0;
         printf("and as you run away you see a trader\n");
-    } 
+    }
 }
 
-void first_trade()
-{
-    int trade_choice;
+void first_trade() {
     int count = 100;
 
     printf("The trader says:\n");
     if (massacre == 1)
     {
+        trade = 1;
+
         printf("please don't hurt me\n");
         printf("I have a family, if you want anything i will give it to you for free\n");
         printf("you explain to him that you are just an adventurer and need supplies and have loads of loot with you\n");
@@ -156,125 +155,146 @@ void first_trade()
         printf("4.Pistol(if you lose your pistol or for duel wielding, included with 3 clips) 90 loot\n5.Shotgun(a pump aciton shotgun)150 loot\n6.Shotgun shells(for a shotgun or a super shotgun) 80 loot\n");
         printf("input 7 to leave the shop\n");
         printf("Loot:100\n");
-        
-        scanf_s("%d" , &trade_choice);
-
-        //a trading system using the above list
-            if (trade_choice == 1)
-            {
-                printf("you bought a mana potion\n");
-                count -= 50;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 2)
-            {
-                printf("you bought a wooden armor\n");
-                count -= 20;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 3)
-            {
-                printf("you bought a pistol ammo\n");
-                count -= 60;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 4)
-            {
-                printf("you bought a pistol\n");
-                count -= 90;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 5)
-            {
-                if (loot <= 150)
-                {
-                    printf("you don't have enough loot\n");
-                }
-                else
-                {
-                    printf("you bought a shotgun\n");
-                    count -= 150;
-                    printf("Loot:%d\n" , count);
-                } 
-            }
-            else if (trade_choice == 6)
-            {
-                printf("you bought a shotgun shells\n");
-                count -= 80;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 7)
-            {
-                printf("you left the shop\n");
-            }
-            else
-            {
-                printf("you entered an invalid command\n");
-            }
     }
     else if (massacre == 0)
     {
+        trade = 0;
         printf("hello there lone traveller\n");
         printf("how are you doing do you want to buy anything from me?\n");
         printf("type 'exit' to leave the shop\n");
         printf("Loot:100\n");
-
-        scanf_s("%d" , &trade_choice);
-
-        //copy and pasted the above mentioned list
-            if (trade_choice == 1)
-            {
-                printf("you bought a mana potion\n");
-                count -= 50;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 2)
-            {
-                printf("you bought a wooden armor\n");
-                count -= 20;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 3)
-            {
-                printf("you bought a pistol ammo\n");
-                count -= 60;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 4)
-            {
-                printf("you bought a pistol\n");
-                count -= 90;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 5)
-            {
-                printf("you bought a shotgun\n");
-                count -= 150;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 6)
-            {
-                printf("you bought a shotgun shells\n");
-                count -= 80;
-                printf("Loot:%d\n" , count);
-            }
-            else if (trade_choice == 7)
-            {
-                printf("you left the shop\n");
-            }
-            else
-            {
-                printf("you entered an invalid command\n");
-            }
     }
 }
 
-int main(int argc, char const *argv[])
-{
-    intro();
-    first_encounter();
-    second_encounter();
-    first_trade();
+void ActualTrade() {
+  scanf_s("%d" , &trade_choice);
+
+  //a trading system using the list in the above function
+  if (trade == 1)
+  {
+      if (trade_choice == 1)
+      {
+          printf("you bought a mana potion\n");
+          loot -= 50;
+          printf("Loot:%d\n" , loot);
+      }
+      else if (trade_choice == 2)
+      {
+          printf("you bought a wooden armor\n");
+          loot -= 20;
+          printf("Loot:%d\n" , loot);
+      }
+      else if (trade_choice == 3)
+      {
+          printf("you bought a pistol ammo\n");
+          loot -= 60;
+          printf("Loot:%d\n" , loot);
+      }
+      else if (trade_choice == 4)
+      {
+          printf("you bought a pistol\n");
+          loot -= 90;
+          printf("Loot:%d\n" , loot);
+      }
+      else if (trade_choice == 5)
+      {
+          if (loot <= 150)
+          {
+              printf("you don't have enough loot\n");
+          }
+          else
+          {
+              printf("you bought a shotgun\n");
+              loot -= 150;
+              printf("Loot:%d\n" , loot);
+          }
+      }
+      else if (trade_choice == 6)
+      {
+          printf("you bought a shotgun shells\n");
+          loot -= 80;
+          printf("Loot:%d\n" , loot);
+      }
+      else if (trade_choice == 7)
+      {
+          printf("you left the shop\n");
+      }
+      else
+      {
+          printf("you entered an invalid command\n");
+      }
+
+    }
+
+    if (trade == 0)
+    {
+      scanf_s("%d" , &trade_choice);
+
+      //copy and pasted the above mentioned list
+          if (trade_choice == 1)
+          {
+              printf("you bought a mana potion\n");
+              loot -= 50;
+              printf("Loot:%d\n" , loot);
+          }
+          else if (trade_choice == 2)
+          {
+              printf("you bought a wooden armor\n");
+              loot -= 20;
+              printf("Loot:%d\n" , loot);
+          }
+          else if (trade_choice == 3)
+          {
+              printf("you bought a pistol ammo\n");
+              loot -= 60;
+              printf("Loot:%d\n" , loot);
+          }
+          else if (trade_choice == 4)
+          {
+              printf("you bought a pistol\n");
+              loot -= 90;
+              printf("Loot:%d\n" , loot);
+          }
+          else if (trade_choice == 5)
+          {
+              printf("you bought a shotgun\n");
+              loot -= 150;
+              printf("Loot:%d\n" , loot);
+          }
+          else if (trade_choice == 6)
+          {
+              printf("you bought a shotgun shells\n");
+              loot -= 80;
+              printf("Loot:%d\n" , loot);
+          }
+          else if (trade_choice == 7)
+          {
+              printf("you left the shop\n");
+          }
+          else
+          {
+              printf("you entered an invalid command\n");
+          }
+    }
+}
+
+void third_encounter() {
+  printf("do you follow the path? \n");
+  printf("you know the one that you decided to go on?\n just asking if you want to continnue \n");
+}
+
+void GameLoop() {
+  intro();
+  first_encounter();
+  second_encounter();
+  first_trade();
+  ActualTrade();
+  third_encounter();
+}
+
+int main(int argc, char const *argv[]) {
+
+    GameLoop();
 
     return 0;
 }
